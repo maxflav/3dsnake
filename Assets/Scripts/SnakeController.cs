@@ -9,15 +9,25 @@ public class SnakeController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown ("w")) {
-			head.transform.Rotate(Vector3.left * 90);
-		} else if (Input.GetKeyDown ("a")) {
-			head.transform.Rotate(Vector3.up * -90);
-		} else if (Input.GetKeyDown ("s")) {
-			head.transform.Rotate(Vector3.left * -90);
-		} else if (Input.GetKeyDown ("d")) {
-			head.transform.Rotate(Vector3.up * 90);
+		float pitch = 0;
+		float yaw = 0;
+		float roll = 0;
+
+		if (Input.GetKeyDown ("w")) { pitch += 1; }
+		if (Input.GetKeyDown ("s")) { pitch -= 1; }
+
+		if (Input.GetKeyDown ("a")) { yaw -= 1; }
+		if (Input.GetKeyDown ("d")) { yaw += 1; }
+
+		if (Input.GetKeyDown ("q")) { roll -= 1; }
+		if (Input.GetKeyDown ("e")) { roll += 1; }
+
+		if (pitch == 0 && yaw == 0 && roll == 0) {
+			return;
 		}
+
+		Vector3 rotVector = new Vector3(-pitch, yaw, -roll);
+		head.transform.Rotate(rotVector * 90);
 	}
 
 	IEnumerator MoveCycle() {
