@@ -61,10 +61,7 @@ public class SnakeController : MonoBehaviour {
 			neck.GetComponent<MeshRenderer> ().enabled = true;
 		}
 
-		neck = (GameObject)Instantiate (head, head.transform.position, head.transform.rotation);
-		neck.GetComponent<MeshRenderer> ().enabled = false;
-		neck.GetComponent<Renderer>().material.color = Color.green;
-		tailQ.Enqueue (neck);
+		Vector3 prevHeadPosition = head.transform.position;
 
 		globalPitch = 0;
 		globalYaw = 0;
@@ -83,6 +80,13 @@ public class SnakeController : MonoBehaviour {
 				return;
 			}
 		}
+
+		// Only create neck part if we didn't die
+
+		neck = (GameObject)Instantiate (head, prevHeadPosition, head.transform.rotation);
+		neck.GetComponent<MeshRenderer> ().enabled = false;
+		neck.GetComponent<Renderer>().material.color = Color.green;
+		tailQ.Enqueue (neck);
 	}
 
 	bool samePosition(Vector3 a, Vector3 b) {
